@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mohamed Aziz Ouertatani — Data Science & MLOps Engineer</title>
+    <meta name="description" content="Final-year Computer Science Engineering student specializing in Data Science. Building end-to-end data pipelines, ML systems, and scalable web applications — seeking a 6-month PFE internship.">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Mohamed Aziz Ouertatani — Data Science & MLOps Engineer">
+    <meta property="og:description" content="Final-year Computer Science Engineering student specializing in Data Science. Building end-to-end data pipelines, ML systems, and scalable web applications.">
+    <meta property="og:image" content="assets/img/projects/estate-mind.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+        :root {
+            --primary-orange: #ff6b00;
+            --text-main: #ffffff;
+            --text-muted: rgba(255, 255, 255, 0.6);
+            --bg-dark: #111111;
+            --bg-elevated: rgba(255, 255, 255, 0.04);
+            --border-subtle: rgba(255, 255, 255, 0.1);
+            --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+        }
+
+        .mono {
+            font-family: var(--font-mono);
+            letter-spacing: 0.02em;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+        }
+
+        /* Scroll-triggered fade-in */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Canvas Background */
+        .canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none; /* Let clicks pass through */
+            z-index: 0; /* Keep it in background */
+        }
+
+        canvas {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Scrim + warm glow over the scroll-driven photo — keeps text
+           legible regardless of which frame is showing, and ties the
+           photo background into the same warm/dark palette as the rest
+           of the site. */
+        .canvas-scrim {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background:
+                radial-gradient(ellipse 55% 45% at 12% 8%, rgba(255, 107, 0, 0.16), transparent 60%),
+                radial-gradient(ellipse 45% 40% at 92% 85%, rgba(255, 107, 0, 0.1), transparent 65%),
+                linear-gradient(180deg, rgba(8, 8, 8, 0.5) 0%, rgba(10, 10, 10, 0.72) 32%, rgba(10, 10, 10, 0.88) 68%, rgba(8, 8, 8, 0.96) 100%);
+        }
+
+        /* Faint technical grid texture, subtle depth cue across the whole page */
+        .grid-texture {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+            background-size: 64px 64px;
+            mask-image: linear-gradient(180deg, rgba(0,0,0,0.5), transparent 70%);
+        }
+
+        /* Overlay Content Container */
+        .content-overlay {
+            position: relative;
+            z-index: 1; /* Above canvas */
+            width: 100%;
+        }
+
+        /* Utility */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        /* Navbar */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px 0;
+        }
+        .logo {
+            font-weight: 700;
+            font-size: 1.2rem;
+            letter-spacing: -0.5px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 40px;
+        }
+        .nav-links a {
+            position: relative;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+            padding-bottom: 4px;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            left: 0; bottom: 0;
+            width: 0;
+            height: 1px;
+            background: var(--primary-orange);
+            transition: width 0.3s ease;
+        }
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--text-main);
+        }
+        .nav-links a:hover::after, .nav-links a.active::after {
+            width: 100%;
+        }
+        .btn {
+            background: white;
+            color: black;
+            padding: 10px 24px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: transform 0.3s;
+        }
+        .btn:hover {
+            transform: scale(1.05);
+        }
+        .btn .icon {
+            background: var(--primary-orange);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 100px 0 50px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .hero-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        .hero-title p {
+            color: var(--primary-orange);
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+        .hero-title h1 {
+            font-size: 5rem;
+            line-height: 1.1;
+            margin: 0;
+            letter-spacing: -2px;
+            font-weight: 600;
+        }
+        .hero-right {
+            max-width: 300px;
+            padding-top: 50px;
+        }
+        .hero-right h3 {
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin: 0 0 15px;
+            line-height: 1.3;
+        }
+        .hero-right p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .hero-services {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 150px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 40px;
+        }
+        .service-item {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .service-item {
+            transition: transform 0.3s ease;
+        }
+        .service-item:hover {
+            transform: translateY(-4px);
+        }
+        .service-item span.num {
+            color: var(--primary-orange);
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+        }
+        .service-item span.name {
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .trusted-by {
+            margin-top: 60px;
+            display: flex;
+            align-items: baseline;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .trusted-text {
+            font-family: var(--font-mono);
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+        .logos {
+            display: flex;
+            align-items: baseline;
+            gap: 0;
+        }
+        .logos span {
+            font-weight: 500;
+            font-size: 0.95rem;
+            color: var(--text-main);
+        }
+        .logos span:not(:last-child)::after {
+            content: '/';
+            color: var(--primary-orange);
+            margin: 0 14px;
+            font-weight: 400;
+        }
+
+        /* Second Section */
+        .section-two {
+            padding: 150px 0;
+            min-height: 100vh;
+        }
+        .section-two-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 80px;
+        }
+        .section-two-left {
+            max-width: 500px;
+        }
+        .section-two-left .subtitle {
+            color: var(--primary-orange);
+            font-family: var(--font-mono);
+            font-weight: 500;
+            font-size: 0.8rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            display: block;
+        }
+        .section-two-left h2 {
+            font-size: 3.5rem;
+            line-height: 1.1;
+            margin: 0;
+            letter-spacing: -1px;
+        }
+        .section-two-right {
+            max-width: 400px;
+            padding-top: 40px;
+        }
+        .section-two-right p.main-text {
+            font-size: 1.2rem;
+            line-height: 1.5;
+            margin-bottom: 40px;
+        }
+        .section-two-right .cta-small {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .section-two-right .cta-small p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin: 0;
+            line-height: 1.4;
+        }
+
+        /* Images Grid */
+        .images-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .image-card {
+            position: relative;
+            aspect-ratio: 4/5;
+            border-radius: 20px;
+            overflow: hidden;
+            background: #222;
+            display: block;
+            text-decoration: none;
+            border: 1px solid var(--border-subtle);
+        }
+        .image-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        .image-card:hover img {
+            transform: scale(1.05);
+        }
+        .image-card .card-caption {
+            position: absolute;
+            left: 0; right: 0; bottom: 0;
+            padding: 20px 18px;
+            background: linear-gradient(180deg, transparent, rgba(0,0,0,0.85) 90%);
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-main);
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .image-card:hover .card-caption {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Orange Button variation */
+        .btn.orange {
+            background: var(--primary-orange);
+            color: white;
+        }
+        .btn.orange .icon {
+            background: white;
+            color: var(--primary-orange);
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 150px 0;
+            min-height: 100vh;
+        }
+        .contact-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 40px;
+            margin-bottom: 100px;
+        }
+        .contact-header h2 {
+            margin: 0;
+            font-size: 6rem;
+            line-height: 0.95;
+            font-weight: 500;
+            letter-spacing: -3px;
+            text-transform: uppercase;
+        }
+        .contact-header h2 em {
+            font-style: normal;
+            color: var(--primary-orange);
+        }
+        .contact-header .lets-talk {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            letter-spacing: 0.04em;
+            line-height: 1.5;
+            color: var(--text-muted);
+            font-weight: 400;
+            max-width: 220px;
+            text-transform: uppercase;
+            padding-bottom: 10px;
+        }
+        .contact-header .lets-talk strong {
+            color: var(--text-main);
+            font-weight: 600;
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+        }
+
+        .contact-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px 80px;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            padding-bottom: 15px;
+        }
+        .form-group label {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            letter-spacing: 0.06em;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+        .form-group {
+            transition: border-color 0.3s ease;
+        }
+        .form-group:focus-within {
+            border-color: var(--primary-orange);
+        }
+        .form-group input {
+            background: transparent;
+            border: none;
+            color: var(--text-main);
+            font-size: 1rem;
+            outline: none;
+            font-family: inherit;
+        }
+        .form-group input::placeholder {
+            color: rgba(255,255,255,0.3);
+        }
+
+        /* Badge */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 20px;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            letter-spacing: 0.06em;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+        }
+        .badge .dot {
+            width: 8px; height: 8px;
+            background: #4A90E2;
+            border-radius: 50%;
+        }
+
+        /* Workflow Section */
+        .workflow-section {
+            padding: 150px 0;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .workflow-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 40px;
+            margin-bottom: 80px;
+        }
+        .workflow-header h2 {
+            font-size: 2.5rem;
+            line-height: 1.2;
+            margin: 0;
+            flex: 1;
+            font-weight: 500;
+            letter-spacing: -1px;
+        }
+        .workflow-header h2 em {
+            font-style: italic;
+            font-weight: 300;
+            color: rgba(255,255,255,0.8);
+        }
+        .workflow-header .desc {
+            flex: 1;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin: 0;
+            max-width: 500px;
+        }
+        
+        .stack-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 60px;
+        }
+        .stack-card {
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 28px;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        .stack-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(255, 107, 0, 0.4);
+        }
+        .stack-card .stack-label {
+            display: block;
+            font-family: var(--font-mono);
+            color: var(--primary-orange);
+            font-size: 0.72rem;
+            font-weight: 500;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+        .stack-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .stack-tags span {
+            font-size: 0.82rem;
+            font-weight: 500;
+            padding: 6px 12px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--border-subtle);
+        }
+        .workflow-footer {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            line-height: 1.5;
+            position: relative;
+            padding-left: 20px;
+        }
+        .workflow-footer::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 8px;
+            width: 6px; height: 6px;
+            background: #4A90E2;
+            border-radius: 50%;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            padding: 150px 0;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .stats-container {
+            display: flex;
+            gap: 100px;
+        }
+        .stat-block {
+            flex: 1;
+        }
+        .stat-top {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--primary-orange);
+            letter-spacing: 0.08em;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+        .stat-line {
+            height: 1px;
+            background: rgba(255,255,255,0.2);
+            margin-bottom: 40px;
+        }
+        .stat-number {
+            font-size: 8rem;
+            font-weight: 500;
+            line-height: 1;
+            letter-spacing: -4px;
+            margin-bottom: 20px;
+        }
+        .stat-number span {
+            font-size: 4rem;
+        }
+        .stat-desc {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        /* Certifications Section */
+        .certifications-section {
+            padding: 150px 0;
+            border-top: 1px solid var(--border-subtle);
+        }
+        .cert-header {
+            max-width: 600px;
+            margin-bottom: 60px;
+        }
+        .cert-header h2 {
+            font-size: 2.5rem;
+            line-height: 1.2;
+            font-weight: 500;
+            letter-spacing: -1px;
+            margin: 0;
+        }
+        .cert-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .cert-card {
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 32px 28px;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        .cert-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(255, 107, 0, 0.4);
+        }
+        .cert-index {
+            display: block;
+            font-family: var(--font-mono);
+            color: var(--primary-orange);
+            font-size: 0.85rem;
+            margin-bottom: 24px;
+        }
+        .cert-card h4 {
+            font-size: 1.05rem;
+            font-weight: 500;
+            line-height: 1.4;
+            margin: 0 0 10px;
+        }
+        .cert-card p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin: 0;
+        }
+        @media (max-width: 768px) {
+            .stats-container {
+                flex-direction: column;
+                gap: 50px;
+            }
+        }
+
+        /* Footer Section */
+        .site-footer {
+            padding: 80px 0 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .footer-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 60px;
+        }
+        .footer-brand h3 {
+            font-size: 1.5rem;
+            margin: 0 0 15px;
+            letter-spacing: -0.5px;
+            font-weight: 700;
+        }
+        .footer-brand p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            max-width: 250px;
+            margin: 0;
+        }
+        .footer-links {
+            display: flex;
+            gap: 80px;
+        }
+        .link-column {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .link-column h4 {
+            margin: 0 0 10px;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-main);
+        }
+        .link-column a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+        .link-column a:hover {
+            color: var(--text-main);
+        }
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 30px;
+        }
+        .footer-bottom p {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            margin: 0;
+        }
+        .footer-bottom-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.8rem;
+            transition: color 0.3s;
+        }
+        .footer-bottom-links a:hover {
+            color: var(--text-main);
+        }
+        @media (max-width: 768px) {
+            .footer-top {
+                flex-direction: column;
+                gap: 50px;
+            }
+            .footer-links {
+                flex-wrap: wrap;
+                gap: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="canvas-container">
+        <canvas id="scroll-animation"></canvas>
+        <div class="canvas-scrim"></div>
+    </div>
+    <div class="grid-texture"></div>
+
+    <div class="content-overlay">
+        <div class="container">
+            <!-- Navbar -->
+            <nav>
+                <a href="index.html" class="logo" style="text-decoration: none; color: inherit;">Aziz Ouertatani</a>
+                <div class="nav-links">
+                    <a href="#about">About</a>
+                    <a href="#skills">Skills</a>
+                    <a href="projects.html">Projects</a>
+                </div>
+                <a href="#contact" class="btn">Get in touch <span class="icon">↗</span></a>
+            </nav>
+
+            <!-- Hero Section -->
+            <section class="hero">
+                <div class="hero-top">
+                    <div class="hero-title">
+                        <p>Hey, I'm a</p>
+                        <h1>Data Science &<br>MLOps Student</h1>
+                    </div>
+                    <div class="hero-right">
+                        <h3>Building systems that<br>scale predictably.</h3>
+                        <p>Final-year Computer Science Engineering student specializing in Data Science, bridging backend APIs and predictive analytics.</p>
+                    </div>
+                </div>
+
+                <div class="hero-services" id="skills">
+                    <div class="service-item">
+                        <span class="num">/ 01</span>
+                        <span class="name">Data & ML</span>
+                    </div>
+                    <div class="service-item">
+                        <span class="num">/ 02</span>
+                        <span class="name">Backend & APIs</span>
+                    </div>
+                    <div class="service-item">
+                        <span class="num">/ 03</span>
+                        <span class="name">DevOps & MLOps</span>
+                    </div>
+                    <div class="service-item">
+                        <span class="num">/ 04</span>
+                        <span class="name">Frontend & BI</span>
+                    </div>
+                </div>
+
+                <div class="trusted-by">
+                    <div class="trusted-text">Experience engineering platforms at</div>
+                    <div class="logos">
+                        <span>iTransform365</span>
+                        <span>Swiver</span>
+                        <span>ESPRIT</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Second Section -->
+            <section class="section-two" id="about">
+                <div class="section-two-header">
+                    <div class="section-two-left">
+                        <span class="subtitle">Engineering Approach</span>
+                        <h2>Architecting<br>Reliable Data<br>& Web Systems</h2>
+                    </div>
+                    <div class="section-two-right">
+                        <p class="main-text">I'm an engineer focused on building robust end-to-end data pipelines, ML models, and scalable web applications from ideation to production.</p>
+                        <div class="cta-small">
+                            <p>Looking for a 6-month<br>End-of-Studies Internship (PFE)</p>
+                            <a href="#contact" class="btn orange">Get in touch <span class="icon">↗</span></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="images-grid">
+                    <a class="image-card" href="projects.html#researchbridge">
+                        <img src="assets/img/projects/researchbridge.jpg" alt="ResearchBridge — research intelligence platform screenshot" loading="lazy">
+                        <span class="card-caption">ResearchBridge →</span>
+                    </a>
+                    <a class="image-card" href="projects.html#estate-mind">
+                        <img src="assets/img/projects/estate-mind.jpg" alt="Estate-Mind — Tunisian real estate data pipeline screenshot" loading="lazy">
+                        <span class="card-caption">Estate-Mind →</span>
+                    </a>
+                    <a class="image-card" href="projects.html#smart-inventory">
+                        <img src="assets/img/projects/smart-inventory.jpg" alt="Smart Inventory Forecasting platform architecture diagram" loading="lazy">
+                        <span class="card-caption">Smart Inventory →</span>
+                    </a>
+                </div>
+            </section>
+
+            <!-- Tech Stack Section -->
+            <section class="workflow-section">
+                <div class="badge"><span class="dot"></span> TECH STACK</div>
+                <div class="workflow-header">
+                    <h2>Proficient in <em>modern tools</em><br>for data engineering and web apps.</h2>
+                    <p class="desc">My stack is focused on high-performance backends, reproducible machine learning environments, and type-safe frontends. I strongly believe in free/open-source-first technologies.</p>
+                </div>
+                <div class="stack-grid">
+                    <div class="stack-card">
+                        <span class="stack-label">Data & Machine Learning</span>
+                        <div class="stack-tags">
+                            <span>Pandas</span><span>NumPy</span><span>scikit-learn</span><span>statsmodels</span><span>MLflow</span>
+                        </div>
+                    </div>
+                    <div class="stack-card">
+                        <span class="stack-label">Backend & APIs</span>
+                        <div class="stack-tags">
+                            <span>Fastify</span><span>Node.js</span><span>Express</span><span>REST APIs</span><span>JWT / RBAC</span>
+                        </div>
+                    </div>
+                    <div class="stack-card">
+                        <span class="stack-label">Databases</span>
+                        <div class="stack-tags">
+                            <span>PostgreSQL</span><span>MongoDB</span><span>Neo4j</span><span>Data Warehousing</span>
+                        </div>
+                    </div>
+                    <div class="stack-card">
+                        <span class="stack-label">DevOps & MLOps</span>
+                        <div class="stack-tags">
+                            <span>Docker</span><span>CI/CD</span><span>Experiment Tracking</span>
+                        </div>
+                    </div>
+                    <div class="stack-card">
+                        <span class="stack-label">Frontend</span>
+                        <div class="stack-tags">
+                            <span>React</span><span>Next.js</span><span>Tailwind CSS</span>
+                        </div>
+                    </div>
+                    <div class="stack-card">
+                        <span class="stack-label">Languages</span>
+                        <div class="stack-tags">
+                            <span>Python</span><span>TypeScript</span><span>JavaScript</span><span>SQL</span><span>Java</span><span>R</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="workflow-footer">Currently pursuing an Engineering Degree in Computer Science (Data Science) at ESPRIT, Tunis. Expected graduation in 2027.</p>
+            </section>
+
+            <!-- Contact Section -->
+            <section class="contact-section" id="contact">
+                <div class="contact-header">
+                    <h2>Ready to build<br>& scale your<br><em>systems?</em></h2>
+                    <div class="lets-talk">
+                        <strong>Let's talk</strong>
+                        I am actively seeking a 6-month PFE internship starting February 2027.
+                    </div>
+                </div>
+                
+                <form class="contact-form" action="mailto:ouertatanimohamedaziz@gmail.com" method="post" enctype="text/plain">
+                    <div class="form-group">
+                        <label>YOUR NAME*</label>
+                        <input type="text" placeholder="John Doe" required>
+                    </div>
+                    <div class="form-group">
+                        <label>YOUR NUMBER</label>
+                        <input type="text" placeholder="+123-456-7890">
+                    </div>
+                    <div class="form-group" style="grid-column: span 2;">
+                        <label>YOUR EMAIL*</label>
+                        <input type="email" placeholder="john@example.com" required>
+                    </div>
+                    <div class="form-group" style="grid-column: span 2;">
+                        <label>HOW CAN I HELP?</label>
+                        <input type="text" placeholder="Tell me about your project or opportunity...">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn orange" style="border:none; cursor:pointer;">Send Message <span class="icon">↗</span></button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Stats Section -->
+            <section class="stats-section">
+                <div class="stats-container">
+                    <div class="stat-block">
+                        <div class="stat-top">ACADEMIC EXCELLENCE</div>
+                        <div class="stat-line"></div>
+                        <div class="stat-number">2027</div>
+                        <div class="stat-desc">Expected Engineering Degree in<br>Computer Science at ESPRIT</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-top">PROFESSIONAL EXPERIENCE</div>
+                        <div class="stat-line"></div>
+                        <div class="stat-number">2<span>+</span></div>
+                        <div class="stat-desc">Years of applied experience<br>building web & data solutions</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Certifications Section -->
+            <section class="certifications-section">
+                <div class="cert-header">
+                    <div class="badge"><span class="dot"></span> Credentials</div>
+                    <h2>Certified across the systems I actually build with.</h2>
+                </div>
+                <div class="cert-grid">
+                    <div class="cert-card">
+                        <span class="cert-index">01</span>
+                        <h4>CCNA: Switching, Routing & Wireless Essentials</h4>
+                        <p>Cisco Networking Academy</p>
+                    </div>
+                    <div class="cert-card">
+                        <span class="cert-index">02</span>
+                        <h4>MongoDB Node.js Developer Path</h4>
+                        <p>MongoDB University</p>
+                    </div>
+                    <div class="cert-card">
+                        <span class="cert-index">03</span>
+                        <h4>Neo4j Fundamentals</h4>
+                        <p>Neo4j GraphAcademy</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="site-footer">
+                <div class="footer-top">
+                    <div class="footer-brand">
+                        <h3>Aziz Ouertatani</h3>
+                        <p>Architecting production-oriented platforms bridging APIs and predictive analytics.</p>
+                        <p style="margin-top: 15px; color: var(--text-main);">+216 29 241 717<br>ouertatanimohamedaziz@gmail.com</p>
+                    </div>
+                    <div class="footer-links">
+                        <div class="link-column">
+                            <h4>Socials</h4>
+                            <a href="https://linkedin.com/in/mohamed-aziz-ouertatani" target="_blank">LinkedIn</a>
+                            <a href="https://github.com/mohamedaziz-ouertatani" target="_blank">GitHub</a>
+                            <a href="https://mohamedaziz-ouertatani.vercel.app" target="_blank">Portfolio</a>
+                        </div>
+                        <div class="link-column">
+                            <h4>Navigation</h4>
+                            <a href="#about">About</a>
+                            <a href="#skills">Skills</a>
+                            <a href="projects.html">Projects</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2026 Mohamed Aziz Ouertatani. All rights reserved.</p>
+                    <div class="footer-bottom-links">
+                        <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">Back to top &uarr;</a>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById("scroll-animation");
+        const context = canvas.getContext("2d");
+
+        const frameCount = 249;
+        const currentFrame = index => (
+            `ezgif-65715f738e050025-jpg/ezgif-frame-${index.toString().padStart(3, '0')}.jpg`
+        );
+
+        const images = new Array(frameCount);
+        const loaded = new Array(frameCount).fill(false);
+        let lastRenderedIndex = -1;
+
+        // Load a single frame (1-indexed) into images[]/loaded[].
+        function loadFrame(frameNumber) {
+            const idx = frameNumber - 1;
+            if (images[idx]) return images[idx];
+            const img = new Image();
+            img.decoding = 'async';
+            img.onload = () => { loaded[idx] = true; };
+            img.src = currentFrame(frameNumber);
+            images[idx] = img;
+            return img;
+        }
+
+        // Load frames in small background batches so we never fire 249
+        // simultaneous requests on page load. First frame loads eagerly so
+        // there's something to paint immediately; the rest stream in during
+        // idle time.
+        function streamRemainingFrames(startAt) {
+            const BATCH_SIZE = 8;
+            let next = startAt;
+
+            function loadBatch() {
+                const end = Math.min(next + BATCH_SIZE, frameCount + 1);
+                for (; next < end; next++) {
+                    loadFrame(next);
+                }
+                if (next <= frameCount) {
+                    scheduleNextBatch();
+                }
+            }
+
+            function scheduleNextBatch() {
+                if ('requestIdleCallback' in window) {
+                    requestIdleCallback(loadBatch, { timeout: 500 });
+                } else {
+                    setTimeout(loadBatch, 60);
+                }
+            }
+
+            scheduleNextBatch();
+        }
+
+        loadFrame(1).onload = () => {
+            loaded[0] = true;
+            renderFrame(0);
+        };
+        streamRemainingFrames(2);
+
+        // If the target frame isn't loaded yet (user scrolled ahead of the
+        // background stream), fall back to the nearest loaded frame instead
+        // of drawing nothing.
+        function nearestLoadedIndex(targetIndex) {
+            if (loaded[targetIndex]) return targetIndex;
+            for (let offset = 1; offset < frameCount; offset++) {
+                const below = targetIndex - offset;
+                if (below >= 0 && loaded[below]) return below;
+                const above = targetIndex + offset;
+                if (above < frameCount && loaded[above]) return above;
+            }
+            return -1;
+        }
+
+        function renderFrame(frameIndex) {
+            const drawIndex = nearestLoadedIndex(frameIndex);
+            if (drawIndex === -1 || drawIndex === lastRenderedIndex) return;
+            const img = images[drawIndex];
+            if (!img || !img.complete) return;
+
+            lastRenderedIndex = drawIndex;
+            const ratio = Math.max(window.innerWidth / img.width, window.innerHeight / img.height);
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const drawWidth = img.width * ratio;
+            const drawHeight = img.height * ratio;
+            const x = (window.innerWidth - drawWidth) / 2;
+            const y = (window.innerHeight - drawHeight) / 2;
+
+            context.drawImage(img, x, y, drawWidth, drawHeight);
+        }
+
+        function getTargetFrameIndex() {
+            const scrollTop = document.documentElement.scrollTop;
+            const maxScrollTop = document.documentElement.scrollHeight - window.innerHeight;
+
+            let scrollFraction = scrollTop / maxScrollTop;
+            if (!isFinite(scrollFraction) || scrollFraction < 0) scrollFraction = 0;
+            if (scrollFraction > 1) scrollFraction = 1;
+
+            return Math.min(frameCount - 1, Math.ceil(scrollFraction * frameCount));
+        }
+
+        window.addEventListener('scroll', () => {
+            requestAnimationFrame(() => {
+                renderFrame(getTargetFrameIndex());
+            });
+        });
+
+        // Handle resize — canvas dimensions changed, so force a redraw even
+        // if the target frame index hasn't.
+        window.addEventListener('resize', () => {
+            lastRenderedIndex = -1;
+            renderFrame(getTargetFrameIndex());
+        });
+
+        // Scroll-triggered fade-ins for major sections.
+        document.addEventListener('DOMContentLoaded', () => {
+            const fadeTargets = document.querySelectorAll(
+                '.section-two, .workflow-section, .contact-section, .stats-section, .certifications-section'
+            );
+            fadeTargets.forEach(el => el.classList.add('fade-in'));
+
+            if ('IntersectionObserver' in window) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.15 });
+
+                fadeTargets.forEach(el => observer.observe(el));
+            } else {
+                fadeTargets.forEach(el => el.classList.add('visible'));
+            }
+
+            // Highlight the nav link for the section currently in view.
+            const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+            const sections = Array.from(navLinks)
+                .map(link => document.querySelector(link.getAttribute('href')))
+                .filter(Boolean);
+
+            if ('IntersectionObserver' in window && sections.length) {
+                const navObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const id = `#${entry.target.id}`;
+                            navLinks.forEach(link => {
+                                link.classList.toggle('active', link.getAttribute('href') === id);
+                            });
+                        }
+                    });
+                }, { rootMargin: '-40% 0px -50% 0px' });
+
+                sections.forEach(section => navObserver.observe(section));
+            }
+        });
+    </script>
+</body>
+</html>

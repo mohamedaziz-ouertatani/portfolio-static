@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects — Mohamed Aziz Ouertatani</title>
+    <meta name="description" content="Featured data engineering, MLOps, and full-stack projects by Mohamed Aziz Ouertatani: ResearchBridge, Estate-Mind, Smart Inventory Forecasting, and an MLOps pipeline.">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Projects — Mohamed Aziz Ouertatani">
+    <meta property="og:description" content="Featured data engineering, MLOps, and full-stack projects by Mohamed Aziz Ouertatani.">
+    <meta property="og:image" content="assets/img/projects/smart-inventory.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --primary-orange: #ff6b00;
+            --text-main: #ffffff;
+            --text-muted: rgba(255, 255, 255, 0.6);
+            --bg-dark: #0c0f16; /* Dark relevant shade instead of pure black */
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Ambient Glow Gradients */
+        .glow {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.15;
+            z-index: -1;
+            pointer-events: none;
+        }
+        .glow-1 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, #ff3b00, #ff8c00);
+            top: -100px;
+            left: -200px;
+        }
+        .glow-2 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, #ff0055, #ff6b00);
+            top: 40%;
+            right: -150px;
+        }
+        .glow-3 {
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, #ff6b00, #ff1a1a);
+            bottom: 5%;
+            left: -300px;
+        }
+
+        /* Utility */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        /* Navbar */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px 0;
+        }
+        .logo {
+            font-weight: 700;
+            font-size: 1.2rem;
+            letter-spacing: -0.5px;
+            text-decoration: none;
+            color: var(--text-main);
+        }
+        .nav-links {
+            display: flex;
+            gap: 40px;
+        }
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--text-main);
+        }
+        .btn {
+            background: white;
+            color: black;
+            padding: 10px 24px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: transform 0.3s;
+        }
+        .btn:hover {
+            transform: scale(1.05);
+        }
+        .btn .icon {
+            background: var(--primary-orange);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
+        }
+        .btn.orange {
+            background: var(--primary-orange);
+            color: white;
+        }
+        .btn.orange .icon {
+            background: white;
+            color: var(--primary-orange);
+        }
+
+        /* Sections */
+        section {
+            padding: 120px 0;
+        }
+
+        /* 1. Hero Section */
+        .projects-hero {
+            padding-top: 150px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .projects-hero h1 {
+            font-size: 5rem;
+            line-height: 1.1;
+            margin: 0 0 20px;
+            letter-spacing: -2px;
+            font-weight: 600;
+        }
+        .projects-hero p {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 80px;
+            line-height: 1.5;
+        }
+
+        /* 2. Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 60px 40px;
+        }
+        .project-card {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.3s;
+        }
+        .project-card:hover {
+            transform: translateY(-10px);
+        }
+        .project-img {
+            width: 100%;
+            aspect-ratio: 4/3;
+            border-radius: 16px;
+            overflow: hidden;
+            background: rgba(255,255,255,0.05);
+        }
+        .project-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        .project-card:hover .project-img img {
+            transform: scale(1.05);
+        }
+        .project-info h3 {
+            font-size: 1.5rem;
+            margin: 0 0 10px;
+            font-weight: 500;
+        }
+        .project-info p {
+            color: var(--text-muted);
+            margin: 0;
+            font-size: 0.95rem;
+            display: flex;
+            gap: 15px;
+        }
+        .project-info p span {
+            color: var(--primary-orange);
+        }
+
+        /* 3. Philosophy / Process */
+        .philosophy {
+            background: rgba(255,255,255,0.02);
+            border-radius: 30px;
+            padding: 100px 80px;
+            margin-top: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 60px;
+        }
+        .phil-left {
+            flex: 1;
+        }
+        .phil-left h2 {
+            font-size: 3rem;
+            line-height: 1.1;
+            margin: 0 0 20px;
+            letter-spacing: -1px;
+            font-weight: 500;
+        }
+        .phil-left p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+        .phil-right {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+        .stat-item h4 {
+            font-size: 2.5rem;
+            margin: 0 0 10px;
+            color: var(--primary-orange);
+            font-weight: 400;
+        }
+        .stat-item p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* 4. CTA Section */
+        .cta-section {
+            text-align: center;
+            padding: 150px 0;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+        .cta-section h2 {
+            font-size: 4rem;
+            line-height: 1;
+            margin: 0 0 30px;
+            letter-spacing: -2px;
+            font-weight: 500;
+        }
+        .cta-section p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin: 0 auto 50px;
+            max-width: 500px;
+        }
+        .cta-section .btn {
+            display: inline-flex;
+            font-size: 1.1rem;
+            padding: 15px 35px;
+        }
+
+        /* Footer */
+        .site-footer {
+            padding: 80px 0 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .footer-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 60px;
+        }
+        .footer-brand h3 {
+            font-size: 1.5rem;
+            margin: 0 0 15px;
+            letter-spacing: -0.5px;
+            font-weight: 700;
+        }
+        .footer-brand p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            max-width: 250px;
+            margin: 0;
+        }
+        .footer-links {
+            display: flex;
+            gap: 80px;
+        }
+        .link-column {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .link-column h4 {
+            margin: 0 0 10px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-main);
+        }
+        .link-column a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+        .link-column a:hover {
+            color: var(--text-main);
+        }
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 30px;
+        }
+        .footer-bottom p {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            margin: 0;
+        }
+        .footer-bottom-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.8rem;
+            transition: color 0.3s;
+        }
+        .footer-bottom-links a:hover {
+            color: var(--text-main);
+        }
+        
+        @media (max-width: 768px) {
+            .projects-grid, .phil-right {
+                grid-template-columns: 1fr;
+            }
+            .philosophy {
+                flex-direction: column;
+                padding: 50px 30px;
+            }
+            .projects-hero h1 { font-size: 3.5rem; }
+            .footer-top { flex-direction: column; gap: 50px; }
+            .footer-links { flex-wrap: wrap; gap: 40px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Ambient Glow Backgrounds -->
+    <div class="glow glow-1"></div>
+    <div class="glow glow-2"></div>
+    <div class="glow glow-3"></div>
+
+    <div class="container">
+        <!-- Navbar -->
+        <nav>
+            <a href="index.html" class="logo">Aziz Ouertatani</a>
+            <div class="nav-links">
+                <a href="index.html#about">About</a>
+                <a href="index.html#skills">Skills</a>
+                <a href="projects.html" class="active">Projects</a>
+            </div>
+            <a href="index.html#contact" class="btn">Get in touch <span class="icon">↗</span></a>
+        </nav>
+
+        <!-- 1. Hero Section -->
+        <section class="projects-hero">
+            <h1>Featured Projects</h1>
+            <p>A curated collection of end-to-end data pipelines, machine learning systems, and full-stack applications built for performance and scalability.</p>
+        </section>
+
+        <!-- 2. Projects Grid -->
+        <section>
+            <div class="projects-grid">
+                <a href="https://github.com/mohamedaziz-ouertatani/ResearchBridge" target="_blank" rel="noopener" class="project-card" id="researchbridge">
+                    <div class="project-img">
+                        <img src="assets/img/projects/researchbridge.jpg" alt="ResearchBridge interface screenshot" loading="lazy">
+                    </div>
+                    <div class="project-info">
+                        <h3>ResearchBridge</h3>
+                        <p><span>Python & LLM APIs</span> Research Intelligence Platform</p>
+                        <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.4; margin-top: 10px;">Solo-built platform that takes a research idea or paper and returns an evidence-grounded assessment — novelty, gaps, and feasibility — via PostgreSQL + pgvector retrieval and LLM-based knowledge extraction, with every claim tied to cited sources.</p>
+                    </div>
+                </a>
+                <a href="https://github.com/mohamedaziz-ouertatani/estate-mind" target="_blank" rel="noopener" class="project-card" id="estate-mind">
+                    <div class="project-img">
+                        <img src="assets/img/projects/estate-mind.jpg" alt="Estate-Mind data visualization screenshot" loading="lazy">
+                    </div>
+                    <div class="project-info">
+                        <h3>Estate-Mind</h3>
+                        <p><span>Pandas & Plotly</span> Tunisian Real Estate Data Pipeline & EDA</p>
+                        <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.4; margin-top: 10px;">Reproducible pipeline cleaning and standardizing multi-source scraped listings, with advanced EDA — price distribution, density heatmaps, and property-segment clustering — for Tunisia's second-hand real estate market.</p>
+                    </div>
+                </a>
+                <a href="https://github.com/mohamedaziz-ouertatani/smart_inventory" target="_blank" rel="noopener" class="project-card" id="smart-inventory" style="grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;">
+                    <div class="project-img" style="aspect-ratio: 16/9;">
+                        <img src="assets/img/projects/smart-inventory.jpg" alt="Smart Inventory Forecasting platform architecture diagram" loading="lazy">
+                    </div>
+                    <div class="project-info">
+                        <h3 style="font-size: 2rem;">Smart Inventory Forecasting & Replenishment Platform</h3>
+                        <p style="font-size: 1rem;"><span>Fastify & MLflow</span> Production-Style Forecasting System</p>
+                        <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-top: 20px;">Containerized platform with data ingestion, feature engineering, rolling backtests, and ETS/ARIMA model selection tracked in MLflow. Forecasts and accuracy metrics are persisted to PostgreSQL and served through JWT-protected Fastify APIs.</p>
+                        <span class="btn orange" style="width: fit-content; margin-top: 30px;">View Project <span class="icon">↗</span></span>
+                    </div>
+                </a>
+                <a href="https://github.com/mohamedaziz-ouertatani" target="_blank" rel="noopener" class="project-card" id="mlops-pipeline" style="grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;">
+                    <div class="project-img" style="aspect-ratio: 16/9;">
+                        <img src="assets/img/projects/mlops-pipeline.jpg" alt="MLOps pipeline screenshot" loading="lazy">
+                    </div>
+                    <div class="project-info">
+                        <h3>ML Project — MLOps Pipeline</h3>
+                        <p><span>scikit-learn & Docker</span> Reproducible Training & Deployment</p>
+                        <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.4; margin-top: 10px;">End-to-end scikit-learn pipeline with MLflow experiment tracking, versioned artifacts via Joblib, and a containerized inference app for reproducible deployment.</p>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- 3. Philosophy / Stats -->
+        <section>
+            <div class="philosophy">
+                <div class="phil-left">
+                    <h2>Engineering<br>Robust Solutions.</h2>
+                    <p>Every system is approached with a focus on reliability, scalability, and type-safety. I don't just write scripts; I architect production-oriented platforms bridging APIs and predictive analytics.</p>
+                </div>
+                <div class="phil-right">
+                    <div class="stat-item">
+                        <h4>3+</h4>
+                        <p>Major Projects</p>
+                    </div>
+                    <div class="stat-item">
+                        <h4>2+</h4>
+                        <p>Years Experience</p>
+                    </div>
+                    <div class="stat-item">
+                        <h4>3</h4>
+                        <p>Professional Certs</p>
+                    </div>
+                    <div class="stat-item">
+                        <h4>100%</h4>
+                        <p>Open-Source First</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Call to Action -->
+        <section class="cta-section">
+            <h2>Seeking an End-of-Studies Internship</h2>
+            <p>I am looking for a 6-month PFE opportunity in Data Science, Data Engineering, or MLOps.</p>
+            <a href="index.html#contact" class="btn orange">Get in touch <span class="icon">↗</span></a>
+        </section>
+
+        <!-- Footer -->
+        <footer class="site-footer">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <h3>Aziz Ouertatani</h3>
+                    <p>Architecting production-oriented platforms bridging APIs and predictive analytics.</p>
+                    <p style="margin-top: 15px; color: var(--text-main);">+216 29 241 717<br>ouertatanimohamedaziz@gmail.com</p>
+                </div>
+                <div class="footer-links">
+                    <div class="link-column">
+                        <h4>Socials</h4>
+                        <a href="https://linkedin.com/in/mohamed-aziz-ouertatani" target="_blank">LinkedIn</a>
+                        <a href="https://github.com/mohamedaziz-ouertatani" target="_blank">GitHub</a>
+                        <a href="https://mohamedaziz-ouertatani.vercel.app" target="_blank">Portfolio</a>
+                    </div>
+                    <div class="link-column">
+                        <h4>Navigation</h4>
+                        <a href="index.html#about">About</a>
+                        <a href="index.html#skills">Skills</a>
+                        <a href="projects.html">Projects</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Mohamed Aziz Ouertatani. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">Back to top &uarr;</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const fadeTargets = document.querySelectorAll('.project-card, .philosophy, .cta-section');
+            fadeTargets.forEach(el => el.classList.add('fade-in'));
+
+            if ('IntersectionObserver' in window) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.15 });
+
+                fadeTargets.forEach(el => observer.observe(el));
+            } else {
+                fadeTargets.forEach(el => el.classList.add('visible'));
+            }
+        });
+    </script>
+</body>
+</html>

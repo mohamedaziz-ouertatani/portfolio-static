@@ -19,3 +19,16 @@ export const homeStats: HomeStat[] = [
     description: "Years of applied experience building web & data solutions",
   },
 ];
+
+export interface AboutHighlight {
+  value: number;
+  suffix?: string;
+  label: string;
+}
+
+/** About section's compact quick-scan stat row. */
+export const aboutHighlights: AboutHighlight[] = [
+  { value: 2, suffix: "+", label: "Years Building" },
+  { value: 3, label: "Engineering Roles" },
+  { value: 3, label: "Certifications" },
+];

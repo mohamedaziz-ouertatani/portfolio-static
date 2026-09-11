@@ -13,7 +13,7 @@ export default function Experience() {
           <h2>
             Practical experience,
             <br />
-            <em>not just coursework.</em>
+            <em>learning by shipping.</em>
           </h2>
           <p className="desc">
             Three engineering roles across two companies, alongside my degree

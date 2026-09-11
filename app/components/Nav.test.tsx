@@ -5,7 +5,7 @@ import Nav from "./Nav";
 describe("Nav", () => {
   it("renders the site short name as the logo", () => {
     render(<Nav />);
-    expect(screen.getByText("Aziz Ouertatani")).toBeInTheDocument();
+    expect(screen.getByText("Mohamed Aziz Ouertatani")).toBeInTheDocument();
   });
 
   it("renders all 4 nav links", () => {

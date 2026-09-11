@@ -15,7 +15,7 @@ export interface SiteData {
 
 export const site: SiteData = {
   name: "Mohamed Aziz Ouertatani",
-  shortName: "Aziz Ouertatani",
+  shortName: "Mohamed Aziz Ouertatani",
   role: "Data Science & MLOps Engineer",
   tagline:
     "Final-year Computer Science Engineering student specializing in Data Science, bridging backend APIs and predictive analytics.",

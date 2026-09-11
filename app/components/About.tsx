@@ -1,3 +1,6 @@
+import { aboutHighlights } from "@/lib/data/stats";
+import AnimatedStat from "./AnimatedStat";
+
 export default function About() {
   return (
     <section className="section-two" id="about">
@@ -18,6 +21,19 @@ export default function About() {
             pipelines, ML models, and scalable web applications from
             ideation to production.
           </p>
+          <div className="about-highlights">
+            {aboutHighlights.map((highlight) => (
+              <div className="about-highlight" key={highlight.label}>
+                <span className="value">
+                  <AnimatedStat
+                    value={highlight.value}
+                    suffix={highlight.suffix}
+                  />
+                </span>
+                <span className="label">{highlight.label}</span>
+              </div>
+            ))}
+          </div>
           <div className="cta-small">
             <p>
               Looking for a 6-month

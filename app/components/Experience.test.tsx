@@ -25,6 +25,6 @@ describe("Experience", () => {
 
   it("renders the section heading", () => {
     render(<Experience />);
-    expect(screen.getByText("not just coursework.")).toBeInTheDocument();
+    expect(screen.getByText("learning by shipping.")).toBeInTheDocument();
   });
 });

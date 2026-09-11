@@ -29,6 +29,12 @@ export default function ScrollCanvas() {
   }, []);
 
   useEffect(() => {
+    // Runs once on mount, when `mounted` is still false and the canvas
+    // hasn't been portal-rendered yet — canvasRef.current is null, so
+    // this bails out immediately. It re-runs when `mounted` flips to
+    // true (the render right after the portal actually mounts the
+    // <canvas>), which is when there's a real element to attach to.
+    if (!mounted) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
     const context = canvas.getContext("2d");
@@ -129,7 +135,7 @@ export default function ScrollCanvas() {
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [mounted]);
 
   if (!mounted) return null;
 

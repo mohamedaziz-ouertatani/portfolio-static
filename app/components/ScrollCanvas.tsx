@@ -64,17 +64,24 @@ export default function ScrollCanvas() {
       if (!img || !img.complete || !context || !canvas) return;
 
       lastRenderedIndex = drawIndex;
+      // Use the layout-viewport size (matches the CSS vh/dvh units the
+      // container is sized with) rather than window.innerWidth/innerHeight,
+      // which on mobile can reflect a different viewport (e.g. including
+      // area under a collapsed browser toolbar) and desync the canvas's
+      // draw buffer from its rendered CSS box, cropping the image.
+      const viewportWidth = document.documentElement.clientWidth;
+      const viewportHeight = document.documentElement.clientHeight;
       const ratio = Math.max(
-        window.innerWidth / img.width,
-        window.innerHeight / img.height,
+        viewportWidth / img.width,
+        viewportHeight / img.height,
       );
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      canvas.width = viewportWidth;
+      canvas.height = viewportHeight;
 
       const drawWidth = img.width * ratio;
       const drawHeight = img.height * ratio;
-      const x = (window.innerWidth - drawWidth) / 2;
-      const y = (window.innerHeight - drawHeight) / 2;
+      const x = (viewportWidth - drawWidth) / 2;
+      const y = (viewportHeight - drawHeight) / 2;
 
       context.drawImage(img, x, y, drawWidth, drawHeight);
     }
@@ -82,7 +89,8 @@ export default function ScrollCanvas() {
     function currentTargetIndex(): number {
       const scrollTop = document.documentElement.scrollTop;
       const maxScrollTop =
-        document.documentElement.scrollHeight - window.innerHeight;
+        document.documentElement.scrollHeight -
+        document.documentElement.clientHeight;
       return getTargetFrameIndex(scrollTop, maxScrollTop, FRAME_COUNT);
     }
 

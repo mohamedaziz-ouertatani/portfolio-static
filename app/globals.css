@@ -31,6 +31,9 @@ body {
   html {
     scroll-behavior: auto;
   }
+  .fade-in {
+    transition: none;
+  }
 }
 
 /* Scroll-triggered fade-in */
@@ -258,7 +261,7 @@ nav {
 .badge .dot {
   width: 8px;
   height: 8px;
-  background: #4a90e2;
+  background: var(--primary-orange);
   border-radius: 50%;
 }
 
@@ -491,7 +494,7 @@ nav {
   position: relative;
 }
 .exp-bullets li::before {
-  content: "—";
+  content: "-";
   position: absolute;
   left: 0;
   color: var(--primary-orange);
@@ -694,7 +697,7 @@ nav {
   top: 8px;
   width: 6px;
   height: 6px;
-  background: #4a90e2;
+  background: var(--primary-orange);
   border-radius: 50%;
 }
 

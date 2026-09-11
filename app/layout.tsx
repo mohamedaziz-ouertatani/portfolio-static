@@ -18,11 +18,11 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: `${site.name} — ${site.role}`,
+  title: `${site.name} - ${site.role}`,
   description: site.metaDescription,
   openGraph: {
     type: "website",
-    title: `${site.name} — ${site.role}`,
+    title: `${site.name} - ${site.role}`,
     description: site.metaDescription,
   },
   twitter: {

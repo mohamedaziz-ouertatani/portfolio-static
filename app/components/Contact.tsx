@@ -26,20 +26,22 @@ export default function Contact() {
           encType="text/plain"
         >
           <div className="form-group">
-            <label>YOUR NAME*</label>
-            <input type="text" placeholder="John Doe" required />
+            <label htmlFor="contact-name">YOUR NAME*</label>
+            <input id="contact-name" name="name" type="text" placeholder="John Doe" required />
           </div>
           <div className="form-group">
-            <label>YOUR NUMBER</label>
-            <input type="text" placeholder="+123-456-7890" />
+            <label htmlFor="contact-phone">YOUR NUMBER</label>
+            <input id="contact-phone" name="phone" type="tel" placeholder="+123-456-7890" />
           </div>
           <div className="form-group" style={{ gridColumn: "span 2" }}>
-            <label>YOUR EMAIL*</label>
-            <input type="email" placeholder="john@example.com" required />
+            <label htmlFor="contact-email">YOUR EMAIL*</label>
+            <input id="contact-email" name="email" type="email" placeholder="john@example.com" required />
           </div>
           <div className="form-group" style={{ gridColumn: "span 2" }}>
-            <label>HOW CAN I HELP?</label>
+            <label htmlFor="contact-message">HOW CAN I HELP?</label>
             <input
+              id="contact-message"
+              name="message"
               type="text"
               placeholder="Tell me about your project or opportunity..."
             />

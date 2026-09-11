@@ -16,7 +16,7 @@ export const projects: Project[] = [
     tagLabel: "Python & LLM APIs",
     tagline: "Research Intelligence Platform",
     description:
-      "Solo-built platform that takes a research idea or paper and returns an evidence-grounded assessment — novelty, gaps, and feasibility — via PostgreSQL + pgvector retrieval and LLM-based knowledge extraction, with every claim tied to cited sources.",
+      "Solo-built platform that takes a research idea or paper and returns an evidence-grounded assessment (novelty, gaps, and feasibility) via PostgreSQL + pgvector retrieval and LLM-based knowledge extraction, with every claim tied to cited sources.",
     image: "/images/projects/researchbridge.jpg",
     link: "https://github.com/mohamedaziz-ouertatani/ResearchBridge",
     featured: false,
@@ -27,7 +27,7 @@ export const projects: Project[] = [
     tagLabel: "Pandas & Plotly",
     tagline: "Tunisian Real Estate Data Pipeline & EDA",
     description:
-      "Reproducible pipeline cleaning and standardizing multi-source scraped listings, with advanced EDA — price distribution, density heatmaps, and property-segment clustering — for Tunisia's second-hand real estate market.",
+      "Reproducible pipeline cleaning and standardizing multi-source scraped listings, with advanced EDA (price distribution, density heatmaps, and property-segment clustering) for Tunisia's second-hand real estate market.",
     image: "/images/projects/estate-mind.jpg",
     link: "https://github.com/mohamedaziz-ouertatani/estate-mind",
     featured: false,
@@ -45,7 +45,7 @@ export const projects: Project[] = [
   },
   {
     slug: "mlops-pipeline",
-    title: "ML Project — MLOps Pipeline",
+    title: "ML Project - MLOps Pipeline",
     tagLabel: "scikit-learn & Docker",
     tagline: "Reproducible Training & Deployment",
     description:

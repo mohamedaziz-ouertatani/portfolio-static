@@ -29,7 +29,7 @@ describe("ProjectsPage", () => {
     expect(
       screen.getByText("Smart Inventory Forecasting & Replenishment Platform"),
     ).toBeInTheDocument();
-    expect(screen.getByText("ML Project — MLOps Pipeline")).toBeInTheDocument();
+    expect(screen.getByText("ML Project - MLOps Pipeline")).toBeInTheDocument();
   });
 
   it("renders the philosophy section and CTA", () => {

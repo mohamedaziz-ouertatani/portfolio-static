@@ -27,5 +27,5 @@ export const site: SiteData = {
     livePortfolio: "https://mohamedaziz-ouertatani.vercel.app",
   },
   metaDescription:
-    "Final-year Computer Science Engineering student specializing in Data Science. Building end-to-end data pipelines, ML systems, and scalable web applications — seeking a 6-month PFE internship.",
+    "Final-year Computer Science Engineering student specializing in Data Science. Building end-to-end data pipelines, ML systems, and scalable web applications, seeking a 6-month PFE internship.",
 };

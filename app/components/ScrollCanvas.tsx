@@ -40,6 +40,10 @@ export default function ScrollCanvas() {
     const context = canvas.getContext("2d");
     if (!context) return;
 
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
     const images: HTMLImageElement[] = new Array(FRAME_COUNT);
     const loaded: boolean[] = new Array(FRAME_COUNT).fill(false);
     let lastRenderedIndex = -1;
@@ -123,17 +127,26 @@ export default function ScrollCanvas() {
       loaded[0] = true;
       renderFrame(0);
     };
+
+    function handleResize() {
+      lastRenderedIndex = -1;
+      renderFrame(reduceMotion ? 0 : currentTargetIndex());
+    }
+
+    // Users who ask for reduced motion still get the backdrop image, just
+    // as a single static frame — skip streaming the other 248 frames and
+    // don't wire up scroll-driven playback.
+    if (reduceMotion) {
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
+    }
+
     streamRemainingFrames(2);
 
     function handleScroll() {
       requestAnimationFrame(() => {
         renderFrame(currentTargetIndex());
       });
-    }
-
-    function handleResize() {
-      lastRenderedIndex = -1;
-      renderFrame(currentTargetIndex());
     }
 
     window.addEventListener("scroll", handleScroll);

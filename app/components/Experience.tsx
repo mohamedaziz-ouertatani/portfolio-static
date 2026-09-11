@@ -16,8 +16,8 @@ export default function Experience() {
             <em>learning by shipping.</em>
           </h2>
           <p className="desc">
-            Three engineering roles across two companies, alongside my degree
-            — building responsive UIs, integrating backend services, and
+            Three engineering roles across two companies, alongside my degree,
+            building responsive UIs, integrating backend services, and
             shipping production-ready features.
           </p>
         </div>

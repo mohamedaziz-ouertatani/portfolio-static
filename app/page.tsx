@@ -10,7 +10,7 @@ import Certifications from "./components/Certifications";
 import SectionIndex from "./components/SectionIndex";
 
 export const metadata: Metadata = {
-  title: `${site.name} — ${site.role}`,
+  title: `${site.name} - ${site.role}`,
   description: site.metaDescription,
 };
 

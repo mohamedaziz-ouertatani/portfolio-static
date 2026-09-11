@@ -4,7 +4,7 @@ import ProjectCard from "../components/ProjectCard";
 import Philosophy from "../components/Philosophy";
 
 export const metadata: Metadata = {
-  title: "Projects — Mohamed Aziz Ouertatani",
+  title: "Projects - Mohamed Aziz Ouertatani",
   description:
     "Featured data engineering, MLOps, and full-stack projects by Mohamed Aziz Ouertatani: ResearchBridge, Estate-Mind, Smart Inventory Forecasting, and an MLOps pipeline.",
 };

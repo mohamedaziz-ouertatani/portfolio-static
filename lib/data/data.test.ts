@@ -7,6 +7,8 @@ import { certifications } from "./certifications";
 import { homeStats } from "./stats";
 import { philosophyStats, philosophyCopy } from "./philosophy";
 import { projects } from "./projects";
+import { services } from "./services";
+import { sectionIndexItems } from "./sectionIndex";
 
 describe("site data", () => {
   it("has the expected identity fields", () => {
@@ -112,5 +114,34 @@ describe("projects data", () => {
     expect(links).toContain(
       "https://github.com/mohamedaziz-ouertatani/smart_inventory",
     );
+  });
+});
+
+describe("services data", () => {
+  it("has exactly 4 services, each with a description", () => {
+    expect(services).toHaveLength(4);
+    for (const service of services) {
+      expect(service.description.length).toBeGreaterThan(0);
+    }
+  });
+});
+
+describe("section index data", () => {
+  it("has exactly 6 items, each pointing at an in-page anchor", () => {
+    expect(sectionIndexItems).toHaveLength(6);
+    for (const item of sectionIndexItems) {
+      expect(item.href.startsWith("#")).toBe(true);
+    }
+  });
+
+  it("is numbered 01 through 06 in order", () => {
+    expect(sectionIndexItems.map((i) => i.num)).toEqual([
+      "01",
+      "02",
+      "03",
+      "04",
+      "05",
+      "06",
+    ]);
   });
 });

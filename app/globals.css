@@ -298,20 +298,28 @@ nav {
 }
 
 .hero-services {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   margin-top: 150px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding-top: 40px;
+  border-top: 1px solid var(--border-subtle);
 }
 .service-item {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  transition: transform 0.3s ease;
+  padding: 30px 28px 36px;
+  border-left: 1px solid var(--border-subtle);
+  transition:
+    transform 0.3s ease,
+    background 0.3s ease;
+}
+.service-item:first-child {
+  border-left: none;
+  padding-left: 0;
 }
 .service-item:hover {
   transform: translateY(-4px);
+  background: var(--bg-elevated);
 }
 .service-item span.num {
   color: var(--primary-orange);
@@ -321,6 +329,80 @@ nav {
 .service-item span.name {
   font-size: 1rem;
   font-weight: 500;
+}
+.service-item .desc {
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Left-edge section index navigator (home page only) */
+.section-index {
+  position: fixed;
+  left: 40px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.section-index-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  transition: color 0.3s ease;
+}
+.section-index-item .line {
+  width: 16px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.3);
+  transition:
+    width 0.3s ease,
+    background 0.3s ease;
+}
+.section-index-item .num {
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+}
+.section-index-item .label {
+  display: inline-block;
+  max-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  opacity: 0;
+  transition:
+    max-width 0.3s ease,
+    opacity 0.3s ease;
+}
+.section-index-item:hover {
+  color: var(--text-main);
+}
+.section-index-item.active {
+  color: var(--text-main);
+}
+.section-index-item.active .line {
+  width: 28px;
+  background: var(--primary-orange);
+}
+.section-index-item.active .num {
+  color: var(--primary-orange);
+  opacity: 1;
+}
+.section-index-item.active .label {
+  max-width: 160px;
+  opacity: 1;
+}
+@media (max-width: 1200px) {
+  .section-index {
+    display: none;
+  }
 }
 
 /* Experience Section */

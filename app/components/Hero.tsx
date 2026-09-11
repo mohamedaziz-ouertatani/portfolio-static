@@ -1,18 +1,12 @@
 import { site } from "@/lib/data/site";
+import { services } from "@/lib/data/services";
 import ScrollCanvas from "./ScrollCanvas";
-
-const services = [
-  { num: "/ 01", name: "Data & ML" },
-  { num: "/ 02", name: "Backend & APIs" },
-  { num: "/ 03", name: "DevOps & MLOps" },
-  { num: "/ 04", name: "Frontend & BI" },
-];
 
 export default function Hero() {
   return (
     <>
       <ScrollCanvas />
-      <section className="hero">
+      <section className="hero" id="hero">
         <div className="hero-top">
           <div className="hero-title">
             <p>Hey, I&apos;m a</p>
@@ -36,6 +30,7 @@ export default function Hero() {
             <div className="service-item" key={service.num}>
               <span className="num">{service.num}</span>
               <span className="name">{service.name}</span>
+              <p className="desc">{service.description}</p>
             </div>
           ))}
         </div>

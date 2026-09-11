@@ -7,6 +7,7 @@ import TechStack from "./components/TechStack";
 import Contact from "./components/Contact";
 import Stats from "./components/Stats";
 import Certifications from "./components/Certifications";
+import SectionIndex from "./components/SectionIndex";
 
 export const metadata: Metadata = {
   title: `${site.name} — ${site.role}`,
@@ -16,6 +17,7 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <main className="container">
+      <SectionIndex />
       <Hero />
       <Experience />
       <About />

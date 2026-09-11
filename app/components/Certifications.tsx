@@ -5,7 +5,7 @@ import ScrollFadeIn from "./ScrollFadeIn";
 export default function Certifications() {
   return (
     <ScrollFadeIn>
-      <section className="certifications-section">
+      <section className="certifications-section" id="credentials">
         <div className="cert-header">
           <div className="badge">
             <span className="dot" /> Credentials

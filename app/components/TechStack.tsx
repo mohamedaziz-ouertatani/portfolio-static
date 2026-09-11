@@ -5,7 +5,7 @@ import ScrollFadeIn from "./ScrollFadeIn";
 export default function TechStack() {
   return (
     <ScrollFadeIn>
-      <section className="workflow-section">
+      <section className="workflow-section" id="stack">
         <div className="badge">
           <span className="dot" /> TECH STACK
         </div>

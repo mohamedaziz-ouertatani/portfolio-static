@@ -1080,7 +1080,146 @@ nav {
   color: var(--text-main);
 }
 
+/* ============================================================
+   Responsive
+   ============================================================ */
+
+/* Tablet: 2-column grids, stacked headers, first round of
+   type-scale reduction for the largest desktop-only headings. */
+@media (max-width: 1024px) {
+  .hero-top {
+    flex-direction: column;
+    gap: 40px;
+  }
+  .hero-right {
+    max-width: 100%;
+    padding-top: 0;
+  }
+  .hero-title h1 {
+    font-size: 3.6rem;
+  }
+  .hero-services {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .service-item:nth-child(odd) {
+    border-left: none;
+    padding-left: 0;
+  }
+
+  .section-two-header {
+    flex-direction: column;
+    gap: 40px;
+  }
+  .section-two-left,
+  .section-two-right {
+    max-width: 100%;
+  }
+  .section-two-right {
+    padding-top: 0;
+  }
+  .section-two-left h2 {
+    font-size: 2.8rem;
+  }
+
+  .workflow-header {
+    flex-direction: column;
+    gap: 24px;
+  }
+  .workflow-header .desc {
+    max-width: 100%;
+  }
+  .stack-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .contact-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+  .contact-header h2 {
+    font-size: 3.6rem;
+  }
+  .contact-header .lets-talk {
+    max-width: 100%;
+  }
+
+  .stat-number {
+    font-size: 5.5rem;
+  }
+
+  .cert-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .projects-grid,
+  .phil-right {
+    grid-template-columns: 1fr;
+  }
+  .project-card.featured {
+    grid-template-columns: 1fr;
+  }
+  .philosophy {
+    flex-direction: column;
+    padding: 60px 40px;
+  }
+  .projects-hero h1 {
+    font-size: 3.5rem;
+  }
+}
+
 @media (max-width: 768px) {
+  section {
+    padding: 80px 0;
+  }
+  .experience-section,
+  .workflow-section,
+  .contact-section,
+  .stats-section,
+  .certifications-section,
+  .section-two {
+    padding: 90px 0;
+  }
+
+  nav {
+    flex-wrap: wrap;
+    row-gap: 16px;
+  }
+  .nav-links {
+    order: 3;
+    width: 100%;
+    justify-content: space-between;
+    gap: 0;
+  }
+
+  .hero {
+    height: auto;
+    min-height: 100vh;
+  }
+  .hero-services {
+    grid-template-columns: 1fr;
+  }
+  .service-item {
+    border-left: none;
+    border-top: 1px solid var(--border-subtle);
+    padding: 24px 0;
+  }
+  .service-item:first-child {
+    border-top: none;
+    padding-top: 0;
+  }
+
+  .section-two-right .cta-small {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .contact-form {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
   .footer-top {
     flex-direction: column;
     gap: 50px;
@@ -1096,18 +1235,64 @@ nav {
     flex-direction: column;
     gap: 50px;
   }
-  .projects-grid,
-  .phil-right {
+}
+
+/* Phone: tightest type scale, single-column everything, reduced
+   container gutters. */
+@media (max-width: 600px) {
+  .container {
+    padding: 0 20px;
+  }
+
+  .hero-title h1 {
+    font-size: 2.6rem;
+    letter-spacing: -1px;
+  }
+  .hero-services {
+    margin-top: 80px;
+  }
+
+  .section-two-left h2 {
+    font-size: 2.2rem;
+  }
+  .section-two-right p.main-text {
+    font-size: 1.05rem;
+  }
+
+  .workflow-header h2 {
+    font-size: 1.8rem;
+  }
+  .stack-grid {
     grid-template-columns: 1fr;
   }
-  .project-card.featured {
+
+  .contact-header h2 {
+    font-size: 2.4rem;
+    letter-spacing: -1px;
+  }
+
+  .stat-number {
+    font-size: 3.6rem;
+    letter-spacing: -2px;
+  }
+  .stat-number span {
+    font-size: 2.2rem;
+  }
+
+  .cert-header h2 {
+    font-size: 1.8rem;
+  }
+  .cert-grid {
     grid-template-columns: 1fr;
   }
-  .philosophy {
-    flex-direction: column;
-    padding: 50px 30px;
-  }
+
   .projects-hero h1 {
-    font-size: 3.5rem;
+    font-size: 2.6rem;
+  }
+  .phil-left h2 {
+    font-size: 2rem;
+  }
+  .cta-section h2 {
+    font-size: 2.2rem;
   }
 }

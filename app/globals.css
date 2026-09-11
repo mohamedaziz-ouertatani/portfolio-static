@@ -147,6 +147,15 @@ canvas {
   padding: 0 40px;
 }
 
+/* .section-index is fixed at left:40px and only shown at >=1200px —
+   reserve a gutter here so it never overlaps in-flow content
+   (e.g. the hero heading), instead of sitting on top of it. */
+@media (min-width: 1200px) {
+  .container {
+    padding-left: 160px;
+  }
+}
+
 section {
   padding: 120px 0;
 }
@@ -396,7 +405,7 @@ nav {
   opacity: 1;
 }
 .section-index-item.active .label {
-  max-width: 160px;
+  max-width: 110px;
   opacity: 1;
 }
 @media (max-width: 1200px) {

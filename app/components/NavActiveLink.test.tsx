@@ -70,4 +70,22 @@ describe("NavActiveLink", () => {
     render(<NavActiveLink href="/projects" label="Projects" />);
     expect(screen.getByRole("link")).not.toHaveClass("active");
   });
+
+  it("still finds its target for a route-qualified href like /#about", () => {
+    render(<NavActiveLink href="/#about" label="About" />);
+    act(() => {
+      observedCallback(
+        [{ isIntersecting: true } as IntersectionObserverEntry],
+        {} as IntersectionObserver,
+      );
+    });
+    expect(screen.getByRole("link")).toHaveClass("active");
+  });
+
+  it("never becomes active for a route-qualified href whose target isn't on the current page", () => {
+    // e.g. rendered on /projects, where no #about element exists
+    document.body.innerHTML = "";
+    render(<NavActiveLink href="/#about" label="About" />);
+    expect(screen.getByRole("link")).not.toHaveClass("active");
+  });
 });

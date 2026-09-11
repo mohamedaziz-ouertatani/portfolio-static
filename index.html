@@ -1092,13 +1092,13 @@
                     <div class="stat-block">
                         <div class="stat-top">ACADEMIC EXCELLENCE</div>
                         <div class="stat-line"></div>
-                        <div class="stat-number">2027</div>
+                        <div class="stat-number"><span class="count-value" data-count-to="2027">0</span></div>
                         <div class="stat-desc">Expected Engineering Degree in<br>Computer Science at ESPRIT</div>
                     </div>
                     <div class="stat-block">
                         <div class="stat-top">PROFESSIONAL EXPERIENCE</div>
                         <div class="stat-line"></div>
-                        <div class="stat-number">2<span>+</span></div>
+                        <div class="stat-number"><span class="count-value" data-count-to="2">0</span><span>+</span></div>
                         <div class="stat-desc">Years of applied experience<br>building web & data solutions</div>
                     </div>
                 </div>
@@ -1321,6 +1321,50 @@
                 }, { rootMargin: '-40% 0px -50% 0px' });
 
                 sections.forEach(section => navObserver.observe(section));
+            }
+
+            // Animated stat counters — count up from 0 to the target value
+            // once the stats section scrolls into view.
+            const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const counters = document.querySelectorAll('.count-value');
+
+            function animateCounter(el) {
+                const target = parseInt(el.dataset.countTo, 10);
+                if (reduceMotion || !target) {
+                    el.textContent = target;
+                    return;
+                }
+                const duration = 1400;
+                const start = performance.now();
+
+                function tick(now) {
+                    const progress = Math.min((now - start) / duration, 1);
+                    const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+                    el.textContent = Math.round(eased * target);
+                    if (progress < 1) {
+                        requestAnimationFrame(tick);
+                    } else {
+                        el.textContent = target;
+                    }
+                }
+                requestAnimationFrame(tick);
+            }
+
+            if (counters.length) {
+                if ('IntersectionObserver' in window) {
+                    const counterObserver = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                animateCounter(entry.target);
+                                counterObserver.unobserve(entry.target);
+                            }
+                        });
+                    }, { threshold: 0.5 });
+
+                    counters.forEach(el => counterObserver.observe(el));
+                } else {
+                    counters.forEach(el => { el.textContent = el.dataset.countTo; });
+                }
             }
         });
     </script>

@@ -2588,7 +2588,7 @@ export default function ScrollFadeIn({
 ```tsx
 // app/components/ScrollFadeIn.test.tsx
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { render, screen, act } from "@testing-library/react";
 import ScrollFadeIn from "./ScrollFadeIn";
 
 describe("ScrollFadeIn", () => {
@@ -2636,14 +2636,18 @@ describe("ScrollFadeIn", () => {
         <p>Hello</p>
       </ScrollFadeIn>,
     );
-    observedCallback(
-      [{ isIntersecting: true } as IntersectionObserverEntry],
-      {} as IntersectionObserver,
-    );
+    act(() => {
+      observedCallback(
+        [{ isIntersecting: true } as IntersectionObserverEntry],
+        {} as IntersectionObserver,
+      );
+    });
     expect(screen.getByText("Hello").parentElement).toHaveClass("visible");
   });
 });
 ```
+
+> The manual `observedCallback(...)` call happens outside any React event handler, so without wrapping it in `act()` the resulting `setVisible(true)` doesn't flush to the DOM before the assertion runs — the test fails intermittently/always depending on timing. `AnimatedStat`'s test (below) doesn't need this because its mock's `observe()` calls the callback synchronously *during* the effect, which is already inside `render()`'s own `act()` boundary.
 
 - [ ] **Step 4: Run the test to verify it fails, then passes**
 
@@ -2701,7 +2705,7 @@ export default function NavActiveLink({
 ```tsx
 // app/components/NavActiveLink.test.tsx
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { render, screen, act } from "@testing-library/react";
 import NavActiveLink from "./NavActiveLink";
 
 describe("NavActiveLink", () => {
@@ -2741,23 +2745,29 @@ describe("NavActiveLink", () => {
 
   it("adds the active class when its section starts intersecting", () => {
     render(<NavActiveLink href="#about" label="About" />);
-    observedCallback(
-      [{ isIntersecting: true } as IntersectionObserverEntry],
-      {} as IntersectionObserver,
-    );
+    act(() => {
+      observedCallback(
+        [{ isIntersecting: true } as IntersectionObserverEntry],
+        {} as IntersectionObserver,
+      );
+    });
     expect(screen.getByRole("link")).toHaveClass("active");
   });
 
   it("removes the active class when its section stops intersecting", () => {
     render(<NavActiveLink href="#about" label="About" />);
-    observedCallback(
-      [{ isIntersecting: true } as IntersectionObserverEntry],
-      {} as IntersectionObserver,
-    );
-    observedCallback(
-      [{ isIntersecting: false } as IntersectionObserverEntry],
-      {} as IntersectionObserver,
-    );
+    act(() => {
+      observedCallback(
+        [{ isIntersecting: true } as IntersectionObserverEntry],
+        {} as IntersectionObserver,
+      );
+    });
+    act(() => {
+      observedCallback(
+        [{ isIntersecting: false } as IntersectionObserverEntry],
+        {} as IntersectionObserver,
+      );
+    });
     expect(screen.getByRole("link")).not.toHaveClass("active");
   });
 

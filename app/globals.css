@@ -1257,9 +1257,26 @@ nav {
     gap: 20px;
   }
 
+  .contact-section {
+    min-height: 0;
+  }
+  .contact-header {
+    margin-bottom: 60px;
+  }
   .contact-form {
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 28px;
+  }
+  .form-group {
+    padding-bottom: 10px;
+  }
+  .form-group label {
+    margin-bottom: 12px;
+  }
+  .contact-form .btn {
+    margin-top: 4px;
+    padding: 12px 28px;
+    font-size: 0.85rem;
   }
 
   .footer-top {

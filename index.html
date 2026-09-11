@@ -394,6 +394,109 @@
             color: var(--primary-orange);
         }
 
+        /* Experience Section */
+        .experience-section {
+            padding: 150px 0;
+            border-top: 1px solid var(--border-subtle);
+        }
+        .exp-timeline {
+            position: relative;
+            padding-left: 44px;
+            border-left: 1px solid var(--border-subtle);
+            display: flex;
+            flex-direction: column;
+            gap: 64px;
+        }
+        .exp-item {
+            position: relative;
+        }
+        .exp-item::before {
+            content: '';
+            position: absolute;
+            left: -50px;
+            top: 6px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--primary-orange);
+            box-shadow: 0 0 0 4px rgba(255, 107, 0, 0.15);
+        }
+        .exp-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 8px 20px;
+            margin-bottom: 6px;
+        }
+        .exp-role-company {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .exp-role {
+            font-size: 1.3rem;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+        }
+        .exp-company {
+            color: var(--primary-orange);
+            font-weight: 500;
+            font-size: 1rem;
+        }
+        .exp-date {
+            font-family: var(--font-mono);
+            color: var(--text-muted);
+            font-size: 0.78rem;
+            letter-spacing: 0.04em;
+            white-space: nowrap;
+            text-transform: uppercase;
+        }
+        .exp-bullets {
+            list-style: none;
+            padding: 0;
+            margin: 16px 0 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 640px;
+        }
+        .exp-bullets li {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            line-height: 1.6;
+            padding-left: 20px;
+            position: relative;
+        }
+        .exp-bullets li::before {
+            content: '—';
+            position: absolute;
+            left: 0;
+            color: var(--primary-orange);
+        }
+        .exp-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .exp-tags span {
+            font-size: 0.78rem;
+            font-weight: 500;
+            padding: 5px 12px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--border-subtle);
+        }
+        @media (max-width: 768px) {
+            .exp-timeline {
+                padding-left: 28px;
+            }
+            .exp-item::before {
+                left: -34px;
+            }
+        }
+
         /* Contact Section */
         .contact-section {
             padding: 150px 0;
@@ -784,6 +887,7 @@
                 <div class="nav-links">
                     <a href="#about">About</a>
                     <a href="#skills">Skills</a>
+                    <a href="#experience">Experience</a>
                     <a href="projects.html">Projects</a>
                 </div>
                 <a href="#contact" class="btn">Get in touch <span class="icon">↗</span></a>
@@ -911,6 +1015,68 @@
                 <p class="workflow-footer">Currently pursuing an Engineering Degree in Computer Science (Data Science) at ESPRIT, Tunis. Expected graduation in 2027.</p>
             </section>
 
+            <!-- Experience Section -->
+            <section class="experience-section" id="experience">
+                <div class="badge"><span class="dot"></span> Experience</div>
+                <div class="workflow-header">
+                    <h2>Where I've <em>applied it</em><br>in production.</h2>
+                    <p class="desc">Three engineering roles across two companies, alongside my degree — building responsive UIs, integrating backend services, and shipping production-ready features.</p>
+                </div>
+
+                <div class="exp-timeline">
+                    <div class="exp-item">
+                        <div class="exp-meta">
+                            <div class="exp-role-company">
+                                <span class="exp-role">Next.js Developer Intern</span>
+                                <span class="exp-company">iTransform365</span>
+                            </div>
+                            <span class="exp-date">May 2024 — Aug 2024</span>
+                        </div>
+                        <ul class="exp-bullets">
+                            <li>Built and optimized Next.js components for performance and scalability; implemented responsive UI with Tailwind CSS and TypeScript.</li>
+                            <li>Collaborated with backend engineers to integrate PostgreSQL services and delivered production-ready features.</li>
+                        </ul>
+                        <div class="exp-tags">
+                            <span>Next.js</span><span>TypeScript</span><span>Tailwind CSS</span><span>PostgreSQL</span>
+                        </div>
+                    </div>
+
+                    <div class="exp-item">
+                        <div class="exp-meta">
+                            <div class="exp-role-company">
+                                <span class="exp-role">React.js Developer</span>
+                                <span class="exp-company">Swiver</span>
+                            </div>
+                            <span class="exp-date">Aug 2022 — Apr 2023</span>
+                        </div>
+                        <ul class="exp-bullets">
+                            <li>Developed responsive UI components with React.js and TypeScript; implemented multilingual support (Arabic, English, French).</li>
+                            <li>Optimized application logic to improve UX performance, building on a prior internship at Swiver.</li>
+                        </ul>
+                        <div class="exp-tags">
+                            <span>React.js</span><span>TypeScript</span><span>JavaScript</span><span>Multilingual Support</span>
+                        </div>
+                    </div>
+
+                    <div class="exp-item">
+                        <div class="exp-meta">
+                            <div class="exp-role-company">
+                                <span class="exp-role">React.js Developer Intern</span>
+                                <span class="exp-company">Swiver</span>
+                            </div>
+                            <span class="exp-date">Jun 2022 — Aug 2022</span>
+                        </div>
+                        <ul class="exp-bullets">
+                            <li>Improved UI responsiveness and translation features; implemented component logic to enhance functionality.</li>
+                            <li>Collaborated on accessibility improvements for wider usability.</li>
+                        </ul>
+                        <div class="exp-tags">
+                            <span>React.js</span><span>Bootstrap</span><span>JavaScript</span><span>Accessibility</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <!-- Contact Section -->
             <section class="contact-section" id="contact">
                 <div class="contact-header">
@@ -1006,6 +1172,7 @@
                             <h4>Navigation</h4>
                             <a href="#about">About</a>
                             <a href="#skills">Skills</a>
+                            <a href="#experience">Experience</a>
                             <a href="projects.html">Projects</a>
                         </div>
                     </div>
@@ -1140,7 +1307,7 @@
         // Scroll-triggered fade-ins for major sections.
         document.addEventListener('DOMContentLoaded', () => {
             const fadeTargets = document.querySelectorAll(
-                '.section-two, .workflow-section, .contact-section, .stats-section, .certifications-section'
+                '.section-two, .workflow-section, .experience-section, .contact-section, .stats-section, .certifications-section'
             );
             fadeTargets.forEach(el => el.classList.add('fade-in'));
 

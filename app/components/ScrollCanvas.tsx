@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { nearestLoadedIndex, getTargetFrameIndex } from "@/lib/scrollFrames";
 
 const FRAME_COUNT = 249;
@@ -12,6 +13,20 @@ function frameSrc(frameNumber: number): string {
 
 export default function ScrollCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [mounted, setMounted] = useState(false);
+
+  // The canvas backdrop must be a direct child of <body>, as a sibling of
+  // .content-overlay — not nested inside it — so its position:fixed,
+  // z-index:0 layer is evaluated in the root stacking context. Nested
+  // anywhere inside .content-overlay (which is itself position:relative,
+  // z-index:1 and therefore its own stacking context), a z-index:0
+  // positioned element paints AFTER plain in-flow content within that
+  // local context, covering the nav/hero/etc. instead of sitting behind
+  // them. A portal to document.body sidesteps this regardless of where
+  // <ScrollCanvas /> is used in the component tree.
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -116,10 +131,16 @@ export default function ScrollCanvas() {
     };
   }, []);
 
-  return (
-    <div className="canvas-container">
-      <canvas ref={canvasRef} id="scroll-animation" />
-      <div className="canvas-scrim" />
-    </div>
+  if (!mounted) return null;
+
+  return createPortal(
+    <>
+      <div className="canvas-container">
+        <canvas ref={canvasRef} id="scroll-animation" />
+        <div className="canvas-scrim" />
+      </div>
+      <div className="grid-texture" />
+    </>,
+    document.body,
   );
 }

@@ -12,7 +12,6 @@ export default function Hero() {
   return (
     <>
       <ScrollCanvas />
-      <div className="grid-texture" />
       <section className="hero">
         <div className="hero-top">
           <div className="hero-title">

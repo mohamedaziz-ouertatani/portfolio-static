@@ -1017,6 +1017,7 @@ git commit -m "Add typed content data layer under lib/data"
 - Modify: `app/layout.tsx` (full content, replacing the Task 1 placeholder)
 - Create: `app/components/Nav.tsx`
 - Create: `app/components/Footer.tsx`
+- Create: `app/components/BackToTopLink.tsx`
 - Test: `app/components/Nav.test.tsx`
 - Test: `app/components/Footer.test.tsx`
 
@@ -2211,9 +2212,31 @@ export default function NavActiveLink({
 - [ ] **Step 6: Write `app/components/Footer.tsx`**
 
 ```tsx
+// app/components/BackToTopLink.tsx
+"use client";
+
+export default function BackToTopLink() {
+  return (
+    <a
+      href="#top"
+      onClick={(e) => {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }}
+    >
+      Back to top &uarr;
+    </a>
+  );
+}
+```
+
+> `Footer` is a Server Component (no `"use client"`), and Server Components cannot pass event handlers like `onClick` as props — Next.js's build fails with "Event handlers cannot be passed to Client Component props." The original static HTML used a plain inline `onclick="..."` attribute, which doesn't translate directly to JSX event props on a server-rendered element. The fix is the same pattern used everywhere else in this port: pull the one interactive piece into its own tiny Client Component and keep everything around it server-rendered.
+
+```tsx
 // app/components/Footer.tsx
 import { site } from "@/lib/data/site";
 import { navLinks } from "@/lib/data/nav";
+import BackToTopLink from "./BackToTopLink";
 
 const socialLinks = [
   { label: "LinkedIn", href: site.socials.linkedin },
@@ -2259,15 +2282,7 @@ export default function Footer() {
       <div className="footer-bottom">
         <p>&copy; 2026 {site.name}. All rights reserved.</p>
         <div className="footer-bottom-links">
-          <a
-            href="#top"
-            onClick={(e) => {
-              e.preventDefault();
-              window.scrollTo({ top: 0, behavior: "smooth" });
-            }}
-          >
-            Back to top &uarr;
-          </a>
+          <BackToTopLink />
         </div>
       </div>
     </footer>
@@ -2317,8 +2332,11 @@ import Footer from "./Footer";
 describe("Footer", () => {
   it("renders the contact email and phone", () => {
     render(<Footer />);
+    // Phone and email share one <p> separated by <br/>, so their text
+    // nodes concatenate with no separator — match by regex (substring),
+    // not an exact string, or this assertion fails against real markup.
     expect(
-      screen.getByText("ouertatanimohamedaziz@gmail.com"),
+      screen.getByText(/ouertatanimohamedaziz@gmail\.com/),
     ).toBeInTheDocument();
     expect(screen.getByText(/\+216 29 241 717/)).toBeInTheDocument();
   });
@@ -2355,7 +2373,7 @@ Expected: builds successfully — `app/page.tsx` is still the Task 1 placeholder
 - [ ] **Step 11: Commit**
 
 ```bash
-git add app/globals.css app/layout.tsx app/components/Nav.tsx app/components/Nav.test.tsx app/components/NavActiveLink.tsx app/components/Footer.tsx app/components/Footer.test.tsx
+git add app/globals.css app/layout.tsx app/components/Nav.tsx app/components/Nav.test.tsx app/components/NavActiveLink.tsx app/components/Footer.tsx app/components/Footer.test.tsx app/components/BackToTopLink.tsx
 git commit -m "Add root layout, merged global stylesheet, Nav and Footer components"
 ```
 

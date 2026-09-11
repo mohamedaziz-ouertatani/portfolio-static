@@ -12,3 +12,6 @@
 .DS_Store
 *.pem
 .env*.local
+
+# local tooling state
+.claude/

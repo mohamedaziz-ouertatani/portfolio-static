@@ -73,14 +73,30 @@ and piece of copy carries over unchanged unless explicitly called out.
   as-is so the stylesheet needs minimal editing beyond de-duplication.
 
 ### Components (`app/components/`)
-Mostly Server Components (static markup, no interactivity):
-- `Nav` — shared between both routes; active-link highlighting (currently
-  JS-driven `IntersectionObserver`) becomes a **Client Component** since it
-  needs scroll state.
-- `Hero`, `Experience`, `About`, `TechStack`, `Certifications`, `Contact`,
-  `Stats`, `Footer` — Server Components; static markup only.
-- `ProjectCard` (used on both the home-page "About" mention and the
-  `/projects` grid) — Server Component, takes project data as props.
+Mostly Server Components, each importing its data from `lib/data/` rather
+than containing hardcoded copy — a section component is purely presentation,
+mapping over its data file's array to render markup:
+- `Nav` — shared between both routes, reads `lib/data/nav.ts`; active-link
+  highlighting (currently JS-driven `IntersectionObserver`) becomes a
+  **Client Component** since it needs scroll state.
+- `Hero` — reads `lib/data/site.ts` for name/role/tagline.
+- `Experience` — maps over `lib/data/experience.ts` to render the timeline;
+  the individual role entry is its own small `ExperienceItem` component.
+- `About` — reads `lib/data/site.ts` for the approach copy.
+- `TechStack` — maps over `lib/data/techStack.ts`; each category card is its
+  own `StackCard` component.
+- `Certifications` — maps over `lib/data/certifications.ts`; each card is
+  its own `CertCard` component.
+- `Contact` — reads `lib/data/site.ts` for email/CTA copy (form fields stay
+  static markup — they're not content, they're a fixed form shape).
+- `Stats` — maps over `lib/data/stats.ts`; each block renders an
+  `AnimatedStat` (see below).
+- `Footer` — reads `lib/data/site.ts` + `lib/data/nav.ts`.
+- `ProjectCard` — used on both the home-page "About" mention and the
+  `/projects` grid; Server Component, takes one `Project` (from
+  `lib/data/projects.ts`) as a prop. `/projects/page.tsx` and `app/page.tsx`
+  both map over the same imported array — no duplicated project data or
+  markup between the two routes.
 
 Client Components (the four pieces of interactive JS in the current page,
 ported faithfully — same logic, same thresholds/timings, wrapped in
@@ -99,13 +115,39 @@ ported faithfully — same logic, same thresholds/timings, wrapped in
 - `NavActiveLink` — scroll-spy active-state highlighting in the nav.
 
 ### Data
-- `lib/projects.ts` — the 4 projects currently hardcoded into
-  `index.html`'s About mention and `projects.html`'s grid
-  (ResearchBridge, Estate-Mind, Smart Inventory, MLOps Pipeline) become a
-  typed array, single source of truth for both pages. This mirrors the
-  pattern already used in the user's other Next.js project, without
-  importing from it — this is this app's own copy, so the two projects
-  stay fully independent per the earlier decision.
+Every piece of content currently hardcoded into the two HTML files moves into
+typed `.ts` files under `lib/data/`, so no section component contains
+hand-authored copy — components render props/imports, data files hold the
+actual content. One file per content domain:
+
+- `lib/data/site.ts` — site-wide constants: name, role/title, email, phone,
+  social links (LinkedIn/GitHub/live-portfolio), OG image path, base
+  metadata (title/description) reused by both routes.
+- `lib/data/projects.ts` — the 4 projects (ResearchBridge, Estate-Mind,
+  Smart Inventory, MLOps Pipeline) as a typed array: title, description,
+  tags, image path, link. Single source of truth for the home page's About
+  mention and the `/projects` grid. This mirrors the pattern already used in
+  the user's other Next.js project, without importing from it — this is this
+  app's own copy, so the two projects stay fully independent per the earlier
+  decision.
+- `lib/data/experience.ts` — the 3 roles (iTransform365, Swiver × 2) as a
+  typed array: role, company, dates, bullet points, tech tags.
+- `lib/data/techStack.ts` — the 6 stack categories (Data & ML, Backend &
+  APIs, Databases, DevOps & MLOps, Frontend, Languages) as a typed array of
+  `{ label, tags[] }`.
+- `lib/data/certifications.ts` — the 3 certifications as a typed array:
+  index, title, issuer.
+- `lib/data/stats.ts` — the 2 stat blocks (graduation year, years of
+  experience) as a typed array: label, value, suffix, description.
+- `lib/data/nav.ts` — nav + footer link lists (About/Skills/Experience/
+  Projects, socials), since both the header nav and footer navigation
+  columns currently repeat the same links.
+
+Each `lib/data/*.ts` file exports both its data and the TypeScript
+`interface`/`type` describing it (e.g. `export interface ExperienceRole {
+role: string; company: string; dates: string; bullets: string[]; tags:
+string[] }`), so section components import a type-safe shape rather than
+inferring structure from props ad hoc.
 
 ### Images
 - The 4 project screenshots (`assets/img/projects/*.jpg`) move to
@@ -133,14 +175,16 @@ ported faithfully — same logic, same thresholds/timings, wrapped in
 ## Migration mapping (file-by-file)
 
 ```
-index.html          → app/page.tsx (+ components below)
-projects.html        → app/projects/page.tsx
-<style> (both files) → app/globals.css
-inline <script>       → ScrollCanvas.tsx, ScrollFadeIn.tsx,
-                        AnimatedStat.tsx, NavActiveLink.tsx
-assets/img/favicon.svg → app/icon.svg
-assets/img/projects/*  → public/images/projects/* (via next/image)
-ezgif-.../ (249 frames) → public/frames/*.jpg (unchanged, referenced by ScrollCanvas)
+index.html              → app/page.tsx (+ components below)
+projects.html           → app/projects/page.tsx
+<style> (both files)    → app/globals.css
+inline <script>         → ScrollCanvas.tsx, ScrollFadeIn.tsx,
+                          AnimatedStat.tsx, NavActiveLink.tsx
+hardcoded copy/content   → lib/data/site.ts, projects.ts, experience.ts,
+                          techStack.ts, certifications.ts, stats.ts, nav.ts
+assets/img/favicon.svg   → app/icon.svg
+assets/img/projects/*    → public/images/projects/* (via next/image)
+ezgif-.../ (249 frames)  → public/frames/*.jpg (unchanged, referenced by ScrollCanvas)
 ```
 
 ## Verification plan
